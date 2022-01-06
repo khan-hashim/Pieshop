@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="site.css" type="text/css" />
+    <title>Pies | Bethany's Pie Shop</title>
+    <style>
+    
+    </style>
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="pies.html">Pies</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+
+        </nav>
+    </header>
+    <main>
+        <aside><img src="images/logo.png" alt="Bethany's pie shop" /></aside>
+        <article>
+            <h1>Pies</h1>
+            <section class="columns-desktop">
+                <div class="pie">
+                    <img src="images/apple-pie.png" alt="Apple pie" />
+                    <div class="columns">
+                        <div class="title">Apple Pie</div>
+                        <div class="price" data-price=12.25>$12.25</div>
+                    </div>
+                    <p class="desc">Our famous Apple pie</p>
+                    <button data-order="apple-pie">Order</button>
+                </div>
+                <div class="pie">
+                    <img src="images/cherry-pie.png" alt="Cherry pie" />
+                    <div class="columns">
+                        <div class="title">Cherry Pie</div>
+                        <div class="price" data-price=15.50>$15.50</div>
+                    </div>
+                    <p class="desc">A Summer Classic</p>
+                    <button data-order="cherry-pie">Order</button>
+                </div>
+                <div class="pie">
+                    <img src="images/pumpkin-pie.png" alt="Pumpkin pie" />
+                    <div class="columns">
+                        <div class="title">Pumpkin Pie</div>
+                        <div class="price" data-price=14.50>$14.50</div>
+                    </div>
+                    <p class="desc">A Thanksgiving Classic</p>
+                    <button data-order="pumpkin-pie">Order</button>
+                </div>
+                <div class="pie">
+                    <img src="images/lemon-meringue-pie.png" alt="Lemon Meringue pie" />
+                    <div class="columns">
+                        <div class="title">Lemon Meringue Pie</div>
+                        <div class="price" data-price=16.50>$16.50</div>
+                    </div>
+                    <p class="desc">Grandma's favourite pie</p>
+                    <button data-order="lemon-meringue-pie">Order</button>
+                </div>
+
+            </section>
+        </article>
+    </main>
+    <footer>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="pies.html">Pies</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+
+        </nav>
+    </footer>
+    
+</body>
+<script>
+    window.addEventListener("DOMContentLoaded", function(e) {
+        let orderbuttons = document.querySelectorAll("button[data-order]");
+        orderbuttons.forEach(function(button){
+            button.addEventListener("click" , function(e){
+                const button = e.currentTarget;
+                let container = button.parentNode;
+                let orderinfo = {
+                    id : button.getAttribute("data-order"),
+                    intprice : container.querySelector(".price").getAttribute("data-price"),
+                    title : container.querySelector(".title").innerText,
+                    price : container.querySelector(".price").innerText,
+                    desc : container.querySelector(".desc").innerText
+                };
+
+                localStorage.setItem("order", JSON.stringify(orderinfo));
+                const newurl = window.location.href.replace("pies.html" , "order.html");
+                window.location.href = newurl;
+
+            });
+
+        });
+    });
+</script>
+</html>
