@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="site.css" type="text/css" />
+    <title>Order | Bethany's Pie Shop</title>
+    <style>
+        h1{
+            padding-bottom: 15px;
+        }
+        .input-group{
+            margin-bottom: 15px;
+        }
+        label{
+            font-weight: 600;
+        }
+        .input-group input,
+        .input-group select,
+        .input-group textarea{
+            padding: 8px;
+            border-radius: 6px;
+            width: 75%;
+            border: solid 1px darkgray;
+        }
+        button{
+            cursor: pointer;
+            padding: 8px;
+            border: solid 1px darkgray;
+            border-radius: 6px;
+        }
+        .checkout{
+            background-color: white;
+            width: 250px;
+            margin: 10px;
+            padding: 10px;
+            border: solid 1px #ccc;
+        }
+        .checkout .columns{
+            width: 100%;
+            padding-top: 10px;
+        }
+        .checkout .price{
+            text-align: right;
+        }
+        .checkout .amount{
+            text-align: right;
+        }
+        .checkout .tax{
+            text-align: right;
+        }
+        .checkout .total{
+            padding-top: 10px;
+            text-align: right;
+        }
+        .checkout .columns div{
+            width: 50%;
+        }
+        .checkout .est-total{
+            padding-top: 10px;
+            font-weight: 600;
+        }
+        .checkout .info{
+            font-weight: 600;
+        }
+        .checkout .seperate{
+            margin-top: 5px;
+            border: solid 2px darkgray;
+            border-left: 1px;
+            border-right: 1px;
+        }
+        @media only screen and (min-width: 768px){
+            article{
+                width: 500px;
+            }
+            bill{
+                margin-top: 2em;
+            }
+            
+            
+   
+        }
+    </style>
+    
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="pies.html">Pies</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+
+        </nav>
+    </header>
+    <main>
+        <aside><img src="images/logo.png" alt="Bethany's pie shop" /></aside>
+        <article>
+            <h1>Order</h1>
+            <div class="pie">
+                <img src=""  />
+                <div class="columns">
+                    <div class="title"></div>
+                    <div class="price"></div>
+                </div>
+                <p class="desc"></p>
+            </div>
+            <form action="http://localhost:7071/api/post" method="POST">
+                <div class="input-group">
+                    <div><label for="first-name">First Name</label></div>
+                    <div><input type="text" name="first-name" id="first-name" /></div>
+                </div>
+                <div class="input-group">
+                    <div><label for="last-name">Last Name</label></div>
+                    <div><input type="text" name="last-name" id="last-name" /></div>
+                </div>
+                <div class="input-group">
+                    <div><label for="address">Address</label></div>
+                    <div><input type="text" name="address" id="address" /></div>
+                </div>
+                <div class="input-group">
+                    <div><label for="city">City</label></div>
+                    <div><input type="text" name="city" id="city" /></div>
+                </div>
+                <div class="input-group">
+                    <div><label for="postal-code">Postal Code</label></div>
+                    <div><input type="text" name="postal-code" id="postal-code" /></div>
+                </div>
+                <div class="input-group">
+                    <div><label for="state">State</label></div>
+                    <div>
+                        <select name="state" id="state">
+                            <option value="" selected>[Select One]</option>
+                            <option value="Alberta">Alberta</option>
+                            <option value="British Columbia">British Columbia</option>
+                            <option value="Manitoba">Manitoba</option>
+                            <option value="Newfoundland">Newfoundland</option>
+                            <option value="Nova Scotia">Nova Scotia</option>
+                            <option value="Ontario">Ontario</option>
+                            <option value="Prince Edward Island">Prince Edward Island</option>
+                            <option value="Quebec">Quebec</option>
+                            <option value="Saskatchewan">Saskatchewan</option>
+                        </select> 
+                    </div>
+                </div>
+                <div class="input-group">
+                    <div><label for="comments">Comments</label></div>
+                    <div><textarea name="comments" id="comments" rows="8" cols="25"></textarea></div>
+                </div>
+                <button value="Order">Order</button>
+
+            </form>
+          
+        </article>
+        <bill>
+            <h1>Order Summary</h1>
+            <div class="checkout">
+                <div class="columns">
+                    <div class="info">Subtotal</div>
+                    <div class="price"></div> 
+                </div>
+                <div class="columns">
+                    <div class="info">Shipping</div>
+                    <div class="amount">Free</div> 
+                </div>
+                <div class="columns">
+                    <div class="info">GST/HST</div>
+                    <div class="tax"></div> 
+                </div>
+                <div class="seperate">
+                    <div class="columns">
+                        <div class="est-total">Estimated Total</div>
+                        <div class="total"></div> 
+                    </div>
+
+                </div>
+                
+            </div>
+        </bill>
+    </main>
+    <footer>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="pies.html">Pies</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+
+        </nav>
+    </footer>
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded" , function(e){
+
+        const order = localStorage.getItem("order");
+        if(order){
+            const pieorder = JSON.parse(order);
+            const pie = document.querySelector(".pie");
+            pie.querySelector("img").setAttribute("src" , "images/" +pieorder.id+".png") ;
+            pie.querySelector(".title").innerText = pieorder.title ;
+            pie.querySelector(".price").innerText = pieorder.price ;
+            pie.querySelector(".desc").innerText = pieorder.desc ;
+            const bill = document.querySelector("bill");
+            bill.querySelector(".price").innerText = pieorder.price;
+            const price = pieorder.intprice ;
+            const tax =  0.10 * price ;
+            bill.querySelector(".tax").innerText =  ("$" + tax).slice(0,5);
+            const total = price + tax;
+            bill.querySelector(".total").innerText = ("$" + total).slice(0,6);
+
+        }
+    })
+</script>
+
+</html>
